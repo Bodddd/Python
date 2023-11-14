@@ -1,0 +1,13 @@
+from sympy import symbols, cos, sin, exp, pi, Abs, Piecewise
+from sympy.abc import x, t
+
+# Define the symbols
+x, t = symbols('x t')
+
+# Define the piecewise function
+f_x = Piecewise((0.5 - 4/Abs(x), x >= 0), (sin(x)**2/x**2, x < 0))
+
+# Define the equation for Z
+Z = (9*pi*t + 10*cos(x)) / (sqrt(t) - Abs(sin(t))) * exp(x)
+
+f_x, Z
