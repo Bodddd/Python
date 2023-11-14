@@ -1,13 +1,25 @@
-from sympy import symbols, cos, sin, exp, pi, Abs, Piecewise
-from sympy.abc import x, t
+import math
 
-# Define the symbols
-x, t = symbols('x t')
+# Define the function to calculate Z without numpy
+def calculate_Z(t, x):
+    if t > 0:
+        return (9 * math.pi * t + 10 * math.cos(x)) / (math.sqrt(t) - abs(math.sin(t))) * math.exp(x)
+    else:
+        return "t must be greater than 0 to calculate Z."
 
-# Define the piecewise function
-f_x = Piecewise((0.5 - 4/Abs(x), x >= 0), (sin(x)**2/x**2, x < 0))
+# Define the piecewise function for f(x) without numpy
+def f(x):
+    if x >= 0:
+        return 0.5 - 4/abs(x)
+    else:
+        return (math.sin(x)**2) / (x**2)
 
-# Define the equation for Z
-Z = (9*pi*t + 10*cos(x)) / (sqrt(t) - Abs(sin(t))) * exp(x)
+# Example usage
+t_value = 1  # Replace with user input
+x_value = 2  # Replace with user input
 
-f_x, Z
+Z_value = calculate_Z(t_value, x_value)
+f_x_value = f(x_value)
+
+print(f"Z: {Z_value:.3f}")
+print(f"f(x): {f_x_value:.3f}")
