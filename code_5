@@ -109,7 +109,16 @@ class FTPUploader:
             ftp.login(self.ftp_connection['user'], self.ftp_connection['password'])
 
             remote_directory = "/upload"
-            ftp.cwd(remote_directory)
+
+            try:
+                ftp.cwd(remote_directory)
+            except error_perm as e:
+                if "550" in str(e):
+                    # Directory doesn't exist, create it
+                    ftp.mkd(remote_directory)
+                    ftp.cwd(remote_directory)
+                else:
+                    raise
 
             with open(self.filename, 'rb') as file:
                 ftp.storbinary(f'STOR {self.filename}', file)
